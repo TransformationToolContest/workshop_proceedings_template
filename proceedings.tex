@@ -1,0 +1,42 @@
+\documentclass[a4paper]{scrartcl}
+
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{pdfpages}
+\usepackage{titletoc}
+\usepackage{longtable}
+\usepackage{wpt}
+
+\begin{document}
+
+%% Proceedings data
+\include{data}
+
+%% Title page
+\include{covers/front}
+
+%% Front matter
+\pagenumbering{roman}
+\include{front_matter/copyright}
+\include{front_matter/preface}
+\include{front_matter/organisation}
+
+%% Table of contents
+\titlecontents{subsubsection}[2pt]{\addvspace{10pt}\bfseries\titlerule[0.5pt]\filright}{}{}{}[]
+\titlecontents{section}[0pt]{\addvspace{5pt}\filright}{}{}{\dotfill\contentspage}[]
+\titlecontents{subsection}[10pt]{\addvspace{1pt}\itshape\filright}{}{}{}[]
+\section*{Table of Contents}
+\papersTOC
+\cleardoublepage
+
+%% Body
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\papers
+
+%% Back page
+\include{covers/back}
+
+\end{document}

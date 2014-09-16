@@ -1,0 +1,113 @@
+\usepackage{datatool}
+\usepackage{pdfpages}
+
+%% Proceedings
+
+\newcommand*{\proceedings}[3]{%
+  \newcommand*{\smalltitle}{%
+    \textbf{\textcolor{namecolor}{\textsf{#1\\}}\textsf{#2}}%
+  }%
+  \newcommand*{\bigtitle}{#3}%
+}
+
+\newcommand*{\held}[2]{%
+  \newcommand*{\makeheld}{#1 \\ #2}
+}
+
+%% Editors
+
+\DTLnewdb{editors}
+
+\newcommand*{\editor}[1]{%
+  \DTLnewrow{editors}%
+  \DTLnewdbentry{editors}{name}{#1}%
+}
+
+\newcommand*{\editors}{%
+  \DTLforeach{editors}{\editor=name}{%
+    \editor \\%
+  }%
+}
+
+%% Copyright
+
+\newcommand{\license}[1]{%
+  \newcommand*{\makelicense}{#1}
+}
+
+%% Preface
+
+\newcommand{\preface}[1]{%
+  \newcommand*{\makepreface}{#1}
+}
+
+%% Organisation
+
+\newcommand{\organisation}[1]{%
+  \newcommand*{\makeorganisation}{#1}
+}
+
+\DTLnewdb{pcmembers}
+
+\newcommand*{\pcmember}[2]{%
+  \DTLnewrow{pcmembers}%
+  \DTLnewdbentry{pcmembers}{name}{#1}%
+  \DTLnewdbentry{pcmembers}{affiliation}{#2}%
+}
+
+\newcommand*{\pcmembers}{%
+  \begin{longtable}{p{0.35\textwidth}p{0.65\textwidth}}%
+    \DTLforeach{pcmembers}{\name=name,\affiliation=affiliation}{%
+      \name & \affiliation\\
+    }%
+  \end{longtable}%
+}
+
+\DTLnewdb{additionalreviewers}
+
+\newcommand*{\additionalreviewer}[2]{%
+  \DTLnewrow{additionalreviewers}%
+  \DTLnewdbentry{additionalreviewers}{name}{#1}%
+  \DTLnewdbentry{additionalreviewers}{affiliation}{#2}%
+}
+
+\newcommand*{\additionalreviewers}{%
+  \begin{longtable}{p{0.35\textwidth}p{0.65\textwidth}}%
+    \DTLforeach{additionalreviewers}{\name=name,\affiliation=affiliation}{%
+      \name & \affiliation\\
+    }%
+  \end{longtable}%
+}
+
+%% Papers
+
+\DTLnewdb{papers}
+
+\newcommand*{\paper}[4]{%
+  \DTLnewrow{papers}%
+  \DTLnewdbentry{papers}{id}{#1}%
+  \DTLnewdbentry{papers}{title}{#2}%
+  \DTLnewdbentry{papers}{authors}{#3}%
+  \DTLnewdbentry{papers}{page}{#4}%
+}
+
+\newcommand*{\papers}{%
+  \DTLforeach{papers}{\id=id}{%
+    \includepdf[pages=-, pagecommand={\hypertarget{paper\id}}]{./papers/paper\id.pdf}%
+  }%
+}
+
+
+\newcommand{\tocSection}[1]{\contentsline{subsubsection}{#1\\*\titlerule[0.5pt]\vspace{-9pt plus 2pt minus 2pt}}{}{}\nopagebreak[4]}
+\newcommand{\tocTitle}[2]{\contentsline{section}{#1}{#2}{}\nopagebreak[4]}
+\newcommand{\tocAuthors}[1]{\contentsline{subsection}{#1}{}{}}
+\newcommand{\tocEntry}[4]{%
+  \tocTitle{\hyperlink{paper#1}{#2}}{#4}
+  \tocAuthors{\hyperlink{paper#1}{#3}}%
+}
+
+\newcommand*{\papersTOC}{%
+  \DTLforeach{papers}{\id=id,\title=title,\authors=authors,\page=page}{%
+    \tocEntry{\id}{\title}{\authors}{\page}%
+  }%
+}
