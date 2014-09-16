@@ -5,8 +5,9 @@ A simple LaTeX template for producing workshop proceedings, such as [these](http
 ## Basic usage
 
 1. Clone this Git repository.
-2. Change the definitions in [data.tex](https://github.com/louismrose/workshop_proceedings_template/blob/master/data.tex).
-3. Run pdflatex on proceedings.tex.
+2. Add the papers for your proceedings to the papers sub-directory, following the convention `paperX.pdf` where X is a numeric identifier.
+3. Change the definitions in [data.tex](https://github.com/louismrose/workshop_proceedings_template/blob/master/data.tex).
+4. Run pdflatex on proceedings.tex.
 
 ## Troubleshooting and feedback
 Please raise an [issue](https://github.com/louismrose/workshop_proceedings_template/issues).
