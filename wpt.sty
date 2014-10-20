@@ -1,6 +1,9 @@
 \usepackage{datatool}
 \usepackage{pdfpages}
 
+% ensure that values are evaluated before adding to a DB row
+\dtlexpandnewvalue
+
 %% Proceedings
 
 \newcommand*{\proceedings}[3]{%
@@ -79,9 +82,15 @@
   \end{longtable}%
 }
 
-%% Papers
+%% Parts and Papers
 
+\DTLnewdb{parts}
 \DTLnewdb{papers}
+
+\newcommand*{\proceedingspart}[1]{%
+  \DTLnewrow{parts}%
+  \DTLnewdbentry{parts}{name}{#1}%
+}
 
 \newcommand*{\paper}[4]{%
   \DTLnewrow{papers}%
@@ -89,11 +98,23 @@
   \DTLnewdbentry{papers}{title}{#2}%
   \DTLnewdbentry{papers}{authors}{#3}%
   \DTLnewdbentry{papers}{page}{#4}%
+  \DTLnewdbentry{papers}{partid}{\DTLrowcount{parts}}%
 }
 
 \newcommand*{\papers}{%
-  \DTLforeach{papers}{\id=id}{%
-    \includepdf[pages=-, pagecommand={\hypertarget{paper\id}}]{./papers/paper\id.pdf}%
+  \DTLifdbempty{parts}
+  {% there are no parts
+    \DTLforeach{papers}{\id=id}{%
+      \includepdf[pages=-, pagecommand={\hypertarget{paper\id}}]{./papers/paper\id.pdf}%
+    }%
+  }
+  {% else (i.e., there are parts)
+    \DTLforeach{parts}{\proceedingspartname=name}{%
+      \part{\proceedingspartname}%
+      \DTLforeach[\DTLiseq{\partid}{\theDTLrowi}]{papers}{\id=id,\partid=partid}{%
+        \includepdf[pages=-, pagecommand={\hypertarget{paper\id}}]{./papers/paper\id.pdf}%
+      }%
+    }%
   }%
 }
 
@@ -107,7 +128,18 @@
 }
 
 \newcommand*{\papersTOC}{%
-  \DTLforeach{papers}{\id=id,\title=title,\authors=authors,\page=page}{%
-    \tocEntry{\id}{\title}{\authors}{\page}%
+  \DTLifdbempty{parts}
+  {% there are no parts
+    \DTLforeach{papers}{\id=id,\title=title,\authors=authors,\page=page}{%
+      \tocEntry{\id}{\title}{\authors}{\page}%
+    }%
+  }
+  {% else (i.e., there are parts)
+    \DTLforeach{parts}{\proceedingspartname=name}{%
+      \contentsline{part}{\proceedingspartname}{}{}%
+      \DTLforeach[\DTLiseq{\partid}{\theDTLrowi}]{papers}{\id=id,\title=title,\authors=authors,\page=page,\partid=partid}{%
+        \tocEntry{\id}{\title}{\authors}{\page}%
+      }%
+    }%
   }%
 }
