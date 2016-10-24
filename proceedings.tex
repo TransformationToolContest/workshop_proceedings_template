@@ -1,6 +1,5 @@
 \documentclass[a4paper]{scrartcl}
-
-\usepackage{geometry}
+\usepackage[left=1.5in,right=1.5cm,top=1.5cm,bottom=2.5cm,headheight=1cm]{geometry}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -8,6 +7,7 @@
 \usepackage{titletoc}
 \usepackage{longtable}
 \usepackage{wpt}
+\usepackage{fancyhdr}
 
 \begin{document}
 
@@ -32,9 +32,14 @@
 \cleardoublepage
 
 %% Body
-\pagenumbering{gobble}
-% \pagenumbering{arabic}
+% \pagenumbering{gobble}
+\pagenumbering{arabic}
 % \setcounter{page}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\hspace*{-15mm}\emph{Page: \thepage}}
+\renewcommand{\headrulewidth}{0pt}
+
 \papers
 
 %% Back page
