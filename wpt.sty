@@ -106,6 +106,7 @@
   {% there are no parts
     \DTLforeach{papers}{\id=id}{%
       \includepdf[pages=-, pagecommand={\hypertarget{paper\id}}]{./papers/paper\id.pdf}%
+      \cleardoublepage%
     }%
   }
   {% else (i.e., there are parts)
@@ -113,6 +114,7 @@
       \part{\proceedingspartname}%
       \DTLforeach[\DTLiseq{\partid}{\theDTLrowi}]{papers}{\id=id,\partid=partid}{%
         \includepdf[pages=-, pagecommand={\hypertarget{paper\id}}]{./papers/paper\id.pdf}%
+        \cleardoublepage%
       }%
     }%
   }%
