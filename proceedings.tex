@@ -1,4 +1,4 @@
-\documentclass[a4paper]{scrartcl}
+\documentclass[a4paper]{scrbook}
 \usepackage[left=1.5in,right=1.5cm,top=1.5cm,bottom=2.5cm,headheight=1cm]{geometry}
 \usepackage{xcolor}
 \usepackage{graphicx}
@@ -16,6 +16,7 @@
 
 %% Title page
 \include{covers/front}
+\cleardoublepage
 
 %% Front matter
 \pagenumbering{roman}
@@ -37,7 +38,8 @@
 % \setcounter{page}{1}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\hspace*{-15mm}\emph{Page: \thepage}}
+\fancyhead[LE]{\emph{Page: \thepage}}
+\fancyhead[RO]{\emph{Page: \thepage}}
 \renewcommand{\headrulewidth}{0pt}
 
 \papers
