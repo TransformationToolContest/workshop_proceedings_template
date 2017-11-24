@@ -1,5 +1,5 @@
 \documentclass[a4paper]{scrbook}
-\usepackage[left=1.5in,right=1.5cm,top=1.5cm,bottom=2.5cm,headheight=1cm]{geometry}
+\usepackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=2.5cm,headheight=1cm]{geometry}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -8,6 +8,7 @@
 \usepackage{longtable}
 \usepackage{wpt}
 \usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
 
 \begin{document}
 
@@ -33,13 +34,11 @@
 \cleardoublepage
 
 %% Body
-% \pagenumbering{gobble}
 \pagenumbering{arabic}
-% \setcounter{page}{1}
+\setcounter{page}{1}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LE]{\emph{Page: \thepage}}
-\fancyhead[RO]{\emph{Page: \thepage}}
+\fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0pt}
 
 \papers
